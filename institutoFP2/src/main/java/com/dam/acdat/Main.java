@@ -2,6 +2,8 @@ package com.dam.acdat;
 
 import java.sql.*;
 
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         try {
@@ -13,7 +15,8 @@ public class Main {
             System.out.println(ex.getMessage());
             System.exit(1);
         }
-        //Actividad 3.3 (Apartado 1 y 2)
+
+        //Ejercicio anterior (Actividad 3.3)
         try {
             //Cadena de conexion a la base ded datos
             String url = "jdbc:postgresql://localhost:5432/";
@@ -54,6 +57,51 @@ public class Main {
             //Cerrar los metodos
             rs.close();
             con.close();
+        }  catch (SQLException e) {
+            System.out.println("Error: No se puede conectar con la base de datos");
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        //Actividad 3.4
+        try {
+            String url = "jdbc:postgresql://localhost:5432/institutofp";
+            String user = "postgres";
+            String password = "iesbelen";
+            Connection con = DriverManager.getConnection(url, user, password);
+            System.out.println("Conexion reestablecida con la base de datos");
+            Statement statement = con.createStatement();
+
+            //Apartado 2 - Insertar un nuevo tema y mostrar el valor devuelto
+            try {
+                String sentence = "INSERT INTO asignaturas VALUES(DEFAULT, 'LENGUAJE DE MARCAS', 1);";
+                System.out.println("Insertando nuevo tema...");
+                System.out.println("Valores alterados: " + statement.executeUpdate(sentence));
+            } catch (SQLException e) {
+                System.out.println("Error: No se pudo insertar los valores");
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
+            }
+
+            //Apartado 3 - Agregar el campo "Horas" a la tabla Asignaturas
+            try {
+                String sentence = "ALTER TABLE asignaturas ADD horas integer;";
+                System.out.println("Insertando nueva columna \"horas\"...");
+                System.out.println("Valores alterados: " + statement.executeUpdate(sentence));
+            } catch (SQLException e) {
+                System.out.println("Error: No se pudo insertar la columna");
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
+            }
+
+            //Mostrar el contenido de la tabla Asignaturas
+            ResultSet rs;
+            System.out.println("Mostrando toda la tabla Asignaturas.");
+            rs = statement.executeQuery("select * from asignaturas");
+            System.out.println("Codigo - Nombre - Anyo - Horas");
+            while (rs.next()) {
+                System.out.println(rs.getString(1) + " - " + rs.getString(2) + " - " + rs.getString(3) + " - " + rs.getString(4));
+            }
         } catch (SQLException e) {
             System.out.println("Error: No se puede conectar con la base de datos");
             System.out.println(e.getMessage());

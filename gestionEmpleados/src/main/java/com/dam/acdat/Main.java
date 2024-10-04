@@ -7,13 +7,18 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
-
     public static void main(String[] args) {
         Scanner kin = new Scanner(System.in);
         try {
             //Registrar el driver
             Class.forName("org.postgresql.Driver");
             System.out.println("Driver cargado");
+        }  catch (ClassNotFoundException ex) {
+            System.out.println("Error: No se puede cargar el controlador");
+            System.out.println(ex.getMessage());
+            System.exit(1);
+        }
+        try {
             //Cadena de conexion a BD
             String url = "jdbc:postgresql://localhost:5432/empleados";
             String user = "postgres";
@@ -108,10 +113,6 @@ public class Main {
             rs.close();
             con.close();
 
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Error: No se puede cargar el controlador");
-            System.out.println(ex.getMessage());
-            System.exit(1);
         } catch (SQLException e) {
             System.out.println("Error: No se puede conectar con la base de datos");
             System.out.println(e.getMessage());

@@ -9,11 +9,18 @@ import java.sql.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+
         try {
             //Registrar el driver
             Class.forName("org.postgresql.Driver");
             System.out.println("Driver cargado");
-
+        }  catch (ClassNotFoundException ex) {
+            System.out.println("Error: No se puede cargar el controlador");
+            System.out.println(ex.getMessage());
+            System.exit(1);
+        }
+        //Actividad 3.3 (Apartado 3)
+        try {
             //Cadena de conexion a la base de datos
             String url = "jdbc:postgresql://localhost:5432/";
             String user = "postgres";
@@ -21,9 +28,10 @@ public class Main {
             Connection con = DriverManager.getConnection(url, user, password);
             System.out.println("Conexion establecida con la base de datos");
 
-            //Crear la base de datos
-            Statement statement = con.createStatement();
-            createDatabase(con,statement);
+            //Apartado 3, parte 1/3 - Crear la base de datos "empleados"
+                //Crear la base de datos
+                Statement statement = con.createStatement();
+                createDatabase(con,statement);
 
             //Conectar la base de datos
             con.close();
@@ -31,13 +39,15 @@ public class Main {
             url = "jdbc:postgresql://localhost:5432/empleados";
             con = DriverManager.getConnection(url, user, password);
 
-            //Insertar la tabla y sus valores
-            statement = con.createStatement();
-            loadDatabase(con,statement);
+            //Apartado 3, parte 2/3 - Ejecutar el script "empleado-dpto.sql"
+                //Insertar la tabla y sus valores
+                statement = con.createStatement();
+                loadDatabase(con,statement);
 
             //Prepara el ResultSet
             ResultSet rs = null;
 
+            //Apartado 3, parte 3/3 - Comprobar ambas tablas
             //Mostrar el contenido de la tabla Departamentos
             System.out.println("Mostrando la base de datos Empleados.");
             System.out.println("\nMostrando la tabla departamentos");
@@ -57,10 +67,6 @@ public class Main {
             //Cerrar los metodos
             rs.close();
             con.close();
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Error: No se puede cargar el controlador");
-            System.out.println(ex.getMessage());
-            System.exit(1);
         } catch (SQLException e) {
             System.out.println("Error: No se puede conectar con la base de datos");
             System.out.println(e.getMessage());

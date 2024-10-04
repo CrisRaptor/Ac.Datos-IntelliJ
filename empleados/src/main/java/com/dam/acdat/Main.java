@@ -5,8 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+//Ejercicio 3.3 -> Linea 21-64
 public class Main {
     public static void main(String[] args) {
 

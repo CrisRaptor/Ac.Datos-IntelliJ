@@ -2,7 +2,7 @@ package com.dam.acdat;
 
 import java.sql.*;
 
-//Ejercicio 3.3 -> Linea 17-42
+//Ejercicio 3.5 -> Linea 65-66
 public class Main {
     public static void main(String[] args) {
         try {
@@ -14,7 +14,8 @@ public class Main {
             System.out.println(ex.getMessage());
             System.exit(1);
         }
-        //Actividad 3.3 (Apartado 1 y 2)
+
+        //Ejercicio anterior (Actividad 3.3)
         try {
             //Cadena de conexion a la base ded datos
             String url = "jdbc:postgresql://localhost:5432/";
@@ -24,9 +25,9 @@ public class Main {
             System.out.println("Conexion establecida con la base de datos");
 
             //Apartado 1, parte 1/2 - Crear la base de datos "institutofp"
-                //Crear la base de datos
-                Statement statement = con.createStatement();
-                createDatabase(con,statement);
+            //Crear la base de datos
+            Statement statement = con.createStatement();
+            createDatabase(con,statement);
 
             //Conectar la base de datos
             con.close();
@@ -37,9 +38,9 @@ public class Main {
             //Insertar la tabla y sus valores
             statement = con.createStatement();
             //Apartado 1, parte 2/2 - Crear la tabla "Asignaturas
-                loadDatabase(con,statement);
+            loadDatabase(con,statement);
             //Apartado 2 - Insertar datos en la tabla
-                insertValues(statement);
+            insertValues(statement);
 
             //Prepara el ResultSet
             ResultSet rs = null;
@@ -55,6 +56,49 @@ public class Main {
             //Cerrar los metodos
             rs.close();
             con.close();
+        }  catch (SQLException e) {
+            System.out.println("Error: No se puede conectar con la base de datos");
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        //Ejercicio 3.5 - Cerrar adecuadamente los recursos
+        try (Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/institutofp","postgres","iesbelen")) {
+            System.out.println("Conexion reestablecida con la base de datos");
+            Statement statement = con.createStatement();
+            //Ejercicio anterior (Actividad 3.4)
+            //Apartado 2 - Insertar un nuevo tema y mostrar el valor devuelto
+            try {
+                String sentence = "INSERT INTO asignaturas VALUES(DEFAULT, 'LENGUAJE DE MARCAS', 1);";
+                System.out.println("Insertando nuevo tema...");
+                System.out.println("Valores alterados: " + statement.executeUpdate(sentence));
+            } catch (SQLException e) {
+                System.out.println("Error: No se pudo insertar los valores");
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
+            }
+
+            //Apartado 3 - Agregar el campo "Horas" a la tabla Asignaturas
+            try {
+                String sentence = "ALTER TABLE asignaturas ADD horas integer;";
+                System.out.println("Insertando nueva columna \"horas\"...");
+                System.out.println("Valores alterados: " + statement.executeUpdate(sentence));
+            } catch (SQLException e) {
+                System.out.println("Error: No se pudo insertar la columna");
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
+            }
+
+            //Mostrar el contenido de la tabla Asignaturas
+            ResultSet rs;
+            System.out.println("Mostrando toda la tabla Asignaturas.");
+            rs = statement.executeQuery("select * from asignaturas");
+            System.out.println("Codigo - Nombre - Anyo - Horas");
+            while (rs.next()) {
+                System.out.println(rs.getString(1) + " - " + rs.getString(2) + " - " + rs.getString(3) + " - " + rs.getString(4));
+            }
+
+            rs.close();
         } catch (SQLException e) {
             System.out.println("Error: No se puede conectar con la base de datos");
             System.out.println(e.getMessage());

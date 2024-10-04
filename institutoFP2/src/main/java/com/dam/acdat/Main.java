@@ -2,8 +2,7 @@ package com.dam.acdat;
 
 import java.sql.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+//Ejercicio 3.4 -> Linea 65
 public class Main {
     public static void main(String[] args) {
         try {

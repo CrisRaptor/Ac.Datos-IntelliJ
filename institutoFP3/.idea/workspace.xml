@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f8a069d-d463-4591-af3b-b504133a6a8b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../empleados/src/main/java/com/dam/acdat/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../empleados/src/main/java/com/dam/acdat/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insitutoFP/src/main/java/com/dam/acdat/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../insitutoFP/src/main/java/com/dam/acdat/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../institutoFP2/src/main/java/com/dam/acdat/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../institutoFP2/src/main/java/com/dam/acdat/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="6f8a069d-d463-4591-af3b-b504133a6a8b" name="Changes" comment="T3_Act3.5" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,11 +63,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1728041178400</updated>
-      <workItem from="1728041179476" duration="833000" />
+      <workItem from="1728041179476" duration="957000" />
     </task>
+    <task id="LOCAL-00001" summary="T3_Act3.5">
+      <option name="closed" value="true" />
+      <created>1728042117767</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1728042117767</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="T3_Act3.5" />
+    <option name="LAST_COMMIT_MESSAGE" value="T3_Act3.5" />
   </component>
 </project>

@@ -4,9 +4,10 @@ import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-//Ejercicio 3.4 -> Linea 65-103
+//Ejercicio 3.6 -> Linea 79-104, 131-¿?
 public class Main {
     public static void main(String[] args) {
+        Scanner kin = new Scanner(System.in);
         try {
             //Registrar el driver
             Class.forName("org.postgresql.Driver");
@@ -27,9 +28,9 @@ public class Main {
             System.out.println("Conexion establecida con la base de datos");
 
             //Apartado 1, parte 1/2 - Crear la base de datos "institutofp"
-                //Crear la base de datos
-                Statement statement = con.createStatement();
-                createDatabase(con,statement);
+            //Crear la base de datos
+            Statement statement = con.createStatement();
+            createDatabase(con,statement);
 
             //Conectar la base de datos
             con.close();
@@ -40,9 +41,9 @@ public class Main {
             //Insertar la tabla y sus valores
             statement = con.createStatement();
             //Apartado 1, parte 2/2 - Crear la tabla "Asignaturas
-                loadDatabase(con,statement);
+            loadDatabase(con,statement);
             //Apartado 2 - Insertar datos en la tabla
-                insertValues(statement);
+            insertValues(statement);
 
             //Prepara el ResultSet
             ResultSet rs = null;
@@ -56,7 +57,6 @@ public class Main {
             }
 
             //Cerrar los metodos
-
             rs.close();
             con.close();
         }  catch (SQLException e) {
@@ -74,11 +74,34 @@ public class Main {
             System.out.println("Conexion reestablecida con la base de datos");
             Statement statement = con.createStatement();
 
-            //Apartado 2 - Insertar un nuevo tema y mostrar el valor devuelto
+            //(Anulado)Apartado 2 - Insertar un nuevo tema y mostrar el valor devuelto
+            //Actividad 3.6
+            /*Apartado 1 - Reescribir el apartado 2 de actividad 3.4
+            para usar PreparedStatement y permitir al usuario insertar varias asignaturas*/
+            String nombre;
+            Integer anyo;
+            int altered;
             try {
-                String sentence = "INSERT INTO asignaturas VALUES(DEFAULT, 'LENGUAJE DE MARCAS', 1);";
-                System.out.println("Insertando nuevo tema...");
-                System.out.println("Valores alterados: " + statement.executeUpdate(sentence));
+                PreparedStatement preparedStatement = con.prepareStatement("insert into asignaturas values(DEFAULT,?,?)");
+                System.out.println("Listo para insertar temas");
+                do {
+                    try {
+                        System.out.println("Indica el nombre de la Asignatura");
+                        nombre = kin.nextLine();
+                        System.out.println("Indica el anyo de la Asignatura");
+                        anyo = kin.nextInt();
+                        kin.nextLine();
+                        preparedStatement.setString(1,nombre);
+                        preparedStatement.setInt(2,anyo);
+                        altered = preparedStatement.executeUpdate();
+                        System.out.println("Insertando nuevo tema...");
+                        System.out.println("Valores alterados: " + altered);
+                    } catch (InputMismatchException e) {
+                        nombre = null;
+                        anyo = null;
+                    }
+                } while(nombre!=null && anyo != null);
+
             } catch (SQLException e) {
                 System.out.println("Error: No se pudo insertar los valores");
                 System.out.println(e.getMessage());
@@ -103,6 +126,19 @@ public class Main {
             System.out.println("Codigo - Nombre - Anyo - Horas");
             while (rs.next()) {
                 System.out.println(rs.getString(1) + " - " + rs.getString(2) + " - " + rs.getString(3) + " - " + rs.getString(4));
+            }
+
+            //Actividad 3.6
+            //Apartado 2 - Usar un PreparedStatement para crear la tabla "cursos", con las columnas "codigo" (serial) y "nombre" (varchar 90)
+            try {
+
+                PreparedStatement preparedStatement = con.prepareStatement("create table cursos");
+                preparedStatement.execute();
+
+            } catch (SQLException e){
+                System.out.println("Error: No se puede crear el curso");
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             System.out.println("Error: No se puede conectar con la base de datos");

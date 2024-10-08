@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-//Ejercicio 3.6 -> Linea 79-104, 131-¿?
+//Ejercicio 3.6 -> Linea 79-104, 131-156
 public class Main {
     public static void main(String[] args) {
         Scanner kin = new Scanner(System.in);
@@ -131,10 +131,29 @@ public class Main {
             //Actividad 3.6
             //Apartado 2 - Usar un PreparedStatement para crear la tabla "cursos", con las columnas "codigo" (serial) y "nombre" (varchar 90)
             try {
-
-                PreparedStatement preparedStatement = con.prepareStatement("create table cursos");
-                preparedStatement.execute();
-
+                System.out.println("Creando cursos...");
+                PreparedStatement preparedStatement = con.prepareStatement("drop table if exists cursos;");
+                preparedStatement.executeUpdate();
+                //Insertar la tabla
+                preparedStatement = con.prepareStatement("""
+                        create table cursos(
+                        codigo serial PRIMARY KEY,
+                        nombre VARCHAR(90) NOT NULL
+                        );""");
+                preparedStatement.executeUpdate();
+                //Insertar valores en la tabla
+                preparedStatement = con.prepareStatement("insert into cursos values(DEFAULT,?)");
+                preparedStatement.setString(1,"Desarrollo de aplicaciones multiplataforma");
+                preparedStatement.executeUpdate();
+                preparedStatement.setString(1,"Desarrollo web");
+                preparedStatement.executeUpdate();
+                //Mostrar los valores
+                System.out.println("Mostrando toda la tabla Cursos.");
+                rs = statement.executeQuery("select * from cursos");
+                System.out.println("Codigo - Nombre");
+                while (rs.next()) {
+                    System.out.println(rs.getString(1) + " - " + rs.getString(2));
+                }
             } catch (SQLException e){
                 System.out.println("Error: No se puede crear el curso");
                 System.out.println(e.getMessage());

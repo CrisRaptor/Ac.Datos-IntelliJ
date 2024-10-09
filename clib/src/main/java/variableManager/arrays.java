@@ -299,7 +299,7 @@ public class arrays {
     /**
      * Elimina los valores pares de un array.
      *
-     * @param tabla array modificado
+     * @param base array modificado
      * @return una copia de tabla sin los valores pares y la longitud ajustada
      */
     static int[] eliminarPares(int[] base) {

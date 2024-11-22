@@ -16,7 +16,6 @@
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
-    <mapping class="com.domain.Departamento"/>
-    <mapping class="com.domain.Empleado"/>
+    <!--<mapping class="com.domain.Departamento"/>-->
   </session-factory>
 </hibernate-configuration>

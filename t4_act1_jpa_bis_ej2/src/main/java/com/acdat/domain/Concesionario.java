@@ -29,7 +29,7 @@ public class Concesionario {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "concesionario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "concesionario", cascade = CascadeType.REMOVE)
     private List<Vehiculo> vehiculos = new ArrayList<>();
 
     public void addVehiculo(Vehiculo vehiculo) {

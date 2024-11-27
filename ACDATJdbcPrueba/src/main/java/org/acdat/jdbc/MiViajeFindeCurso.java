@@ -12,11 +12,16 @@ public class MiViajeFindeCurso {
         try {
             jdbc.IniciarTransaccion();
             jdbc.abrirConexion();
+            //Crear tablas
             cargarEstructuras(jdbc.connection);
+            //Insertar datos
             importarAgencias(jdbc.connection);
             importarVuelos(jdbc.connection);
             importarClientes(jdbc.connection);
             importarDestinos(jdbc.connection);
+            importarClientesDestinos(jdbc.connection);
+            importarDestinosAgencias(jdbc.connection);
+            importarClientesVuelos(jdbc.connection);
 
             new VistaVuelo().crudVuelo();
             jdbc.commitTransaccion();
@@ -31,7 +36,7 @@ public class MiViajeFindeCurso {
     private static void cargarEstructuras(Connection con) throws SQLException {
         Statement stmt = con.createStatement();
         //Agencias
-        String sql = "CREATE TABLE agencias (\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS agencias (\n" +
                 "agencia_id SERIAL PRIMARY KEY,\n" +
                 "nombre_agencia VARCHAR(100) NOT NULL,\n" +
                 "direccion_agencia TEXT,\n" +
@@ -40,7 +45,7 @@ public class MiViajeFindeCurso {
         stmt.execute(sql);
 
         //Clientes
-        sql = "CREATE TABLE clientes (\n" +
+        sql = "CREATE TABLE IF NOT EXISTS clientes (\n" +
                 "cliente_id SERIAL PRIMARY KEY,\n" +
                 "nombre_cliente VARCHAR(100) NOT NULL,\n" +
                 "correo_cliente VARCHAR(100) UNIQUE,\n" +
@@ -49,7 +54,7 @@ public class MiViajeFindeCurso {
         stmt.execute(sql);
 
         //Destinos
-        sql = "CREATE TABLE destinos (\n" +
+        sql = "CREATE TABLE IF NOT EXISTS destinos (\n" +
                 "destino_id SERIAL PRIMARY KEY,\n" +
                 "nombre_destino VARCHAR(100) NOT NULL,\n" +
                 "descripcion TEXT,\n" +
@@ -58,7 +63,7 @@ public class MiViajeFindeCurso {
         stmt.execute(sql);
 
         //Vuelos
-        sql = "CREATE TABLE vuelos (\n" +
+        sql = "CREATE TABLE IF NOT EXISTS vuelos (\n" +
                 "vuelo_id SERIAL PRIMARY KEY,\n" +
                 "origen VARCHAR(50),\n" +
                 "destino VARCHAR(50),\n" +
@@ -67,6 +72,32 @@ public class MiViajeFindeCurso {
                 "costo NUMERIC(10, 2)\n" +
                 ");";
         stmt.execute(sql);
+
+        //Clientes-Destinos
+        sql = "CREATE TABLE IF NOT EXISTS clientes_destinos (\n" +
+                "cliente_id INTEGER REFERENCES clientes(cliente_id),\n" +
+                "destino_id INTEGER REFERENCES destinos(destino_id),\n" +
+                "PRIMARY KEY (cliente_id, destino_id)\n" +
+                ");";
+        stmt.execute(sql);
+
+        //Destinos-Agencias
+        sql = "CREATE TABLE IF NOT EXISTS destinos_agencias (\n" +
+                "destino_id INTEGER REFERENCES destinos(destino_id),\n" +
+                "gencia_id INTEGER REFERENCES agencias(agencia_id),\n" +
+                "PRIMARY KEY (destino_id, agencia_id)\n" +
+                ");";
+        stmt.execute(sql);
+
+        //Clientes-Vuelos
+        sql = "CREATE TABLE IF NOT EXISTS clientes_vuelos (\n" +
+                "cliente_id INTEGER REFERENCES clientes(cliente_id),\n" +
+                "vuelo_id INTEGER REFERENCES vuelos(vuelo_id),\n" +
+                "PRIMARY KEY (cliente_id, vuelo_id)\n" +
+                ");";
+
+        stmt.execute(sql);
+
     }
 
     private static void importarAgencias(Connection con) throws SQLException {
@@ -169,6 +200,38 @@ public class MiViajeFindeCurso {
                 "('Ciudad A', 'Ciudad B', '2023-12-01', '2023-12-05', 500.00),\n" +
                 "('Ciudad C', 'Ciudad D', '2023-12-10', '2023-12-15', 700.00),\n" +
                 "('Ciudad E', 'Ciudad F', '2023-12-20', '2023-12-25', 900.00);\n";
+        stmt.executeUpdate(sql);
+    }
+
+    private static void importarClientesDestinos(Connection con) throws SQLException {
+        Statement stmt = con.createStatement();
+        //Clientes-Destinos
+        String sql = "INSERT INTO clientes_destinos (cliente_id, destino_id)\n" +
+                "VALUES(1, 1), (1, 3), (1, 5), (1, 7), (1, 9),\n" +
+                " (2, 2), (2, 4), (2, 6), (2, 8), (2, 10),\n" +
+                " (3, 3), (3, 5), (3, 7), (3, 9), (3, 11),\n" +
+                "-- ... continúa con los demás usuarios y destinos según sea necesario.\n" +
+                "(10, 10), (10, 12), (10, 14), (10, 11), (10, 2);";
+        stmt.executeUpdate(sql);
+    }
+
+    private static void importarDestinosAgencias(Connection con) throws SQLException {
+        Statement stmt = con.createStatement();
+        //Destinos-Agencias
+        String sql = "INSERT INTO destinos_agencias (destino_id, agencia_id)\n" +
+                "VALUES(1, 1), (1, 3), (1, 5), (1, 7), (1, 9),\n" +
+                "(2, 2), (2, 4), (2, 6), (2, 8), (2, 10),\n" +
+                "(3, 3), (3, 5), (3, 7), (3, 9), (3, 10),\n" +
+                "(10, 10), (10, 2), (10, 4);";
+        stmt.executeUpdate(sql);
+    }
+
+    private static void importarClientesVuelos(Connection con) throws SQLException {
+        Statement stmt = con.createStatement();
+        //Clientes-Vuelos
+        String sql = "INSERT INTO clientes_vuelos (cliente_id, vuelo_id) " +
+                "VALUES(1, 1), (1, 2),(2, 2), (2, 3);";
+
         stmt.executeUpdate(sql);
     }
 }

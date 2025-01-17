@@ -1,9 +1,10 @@
 package com.iesbelen.dam.apirest.apirest1.modelo.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "empleados")
+@Table(name = "empleados", schema = "public")
 public class Empleado {
     @Id
     @Column(name = "empno", nullable = false)
@@ -15,7 +16,7 @@ public class Empleado {
     @Column(name = "puesto", length = 15)
     private String puesto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "depno")
     private Departamento depno;
 
@@ -43,6 +44,9 @@ public class Empleado {
         this.puesto = puesto;
     }
 
+//    @ManyToOne
+//    @JoinColumn(name = "depno", referencedColumnName = "depno")
+    @JsonIgnoreProperties("empleados")
     public Departamento getDepno() {
         return depno;
     }

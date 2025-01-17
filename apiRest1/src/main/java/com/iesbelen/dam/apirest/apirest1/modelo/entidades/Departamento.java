@@ -1,12 +1,13 @@
 package com.iesbelen.dam.apirest.apirest1.modelo.entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "departamentos")
+@Table(name = "departamentos", schema = "public")
 public class Departamento {
     @Id
     @Column(name = "depno", nullable = false)
@@ -17,6 +18,9 @@ public class Departamento {
 
     @Column(name = "ubicacion", length = 13)
     private String ubicacion;
+
+    @OneToMany(mappedBy = "depno")
+    private Set<Empleado> empleados = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -40,6 +44,16 @@ public class Departamento {
 
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+//    @OneToMany(mappedBy = "depno")
+    @JsonIgnoreProperties("depno")
+    public Set<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(Set<Empleado> empleados) {
+        this.empleados = empleados;
     }
 
 }

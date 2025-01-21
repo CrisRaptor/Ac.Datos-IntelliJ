@@ -74,17 +74,17 @@ public class ControladorEmpleados {
         Optional<Empleado> empleado = empleadosDAO.findById(id);
 
         if (empleado.isPresent()) {
-//            EmpleadoDTO empleadoDTO = new EmpleadoDTO();
-//            empleadoDTO.setEmpno(empleado.get().getId());
-//            empleadoDTO.setNombre(empleado.get().getNombre());
-//            empleadoDTO.setPuesto(empleado.get().getPuesto());
-//            empleadoDTO.setDepartamento(empleado.get().getDepno().getId());
-//            empleadoDTO.setDepartamentoNombre(empleado.get().getDepno().getNombre());
-//            empleadoDTO.setDepartamentoUbicacion(empleado.get().getDepno().getUbicacion());
-            Optional<Departamento> departamento = departamentosDAO.findById(empleado.get().getDepno().getId());
-            ModelMapper mapper = new ModelMapper();
-            EmpleadoDTO empleadoDTO = mapper.map(empleado.get(), EmpleadoDTO.class);
-            mapper.map(departamento.get(), empleadoDTO);
+            EmpleadoDTO empleadoDTO = new EmpleadoDTO();
+            empleadoDTO.setEmpno(empleado.get().getId());
+            empleadoDTO.setNombre(empleado.get().getNombre());
+            empleadoDTO.setPuesto(empleado.get().getPuesto());
+            empleadoDTO.setDepartamento(empleado.get().getDepno().getId());
+            empleadoDTO.setDepartamentoNombre(empleado.get().getDepno().getNombre());
+            empleadoDTO.setDepartamentoUbicacion(empleado.get().getDepno().getUbicacion());
+//            Optional<Departamento> departamento = departamentosDAO.findById(empleado.get().getDepno().getId());
+//            ModelMapper mapper = new ModelMapper();
+//            EmpleadoDTO empleadoDTO = mapper.map(empleado.get(), EmpleadoDTO.class);
+//            mapper.map(departamento.get(), empleadoDTO);
 
             return ResponseEntity.ok().body(empleadoDTO);
         } else {

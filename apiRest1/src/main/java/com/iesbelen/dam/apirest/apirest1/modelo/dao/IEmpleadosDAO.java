@@ -6,9 +6,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IEmpleadosDAO extends CrudRepository<Empleado, Integer> {
     Empleado findByPuesto(String nombre);
+    List<Empleado> findByPuestoContains(String string);
     //Empleado findByDepnoGreaterThanEqual(int depno);
 
     @Query("select e from Empleado e where e.nombre like %:patron%")

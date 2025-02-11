@@ -1,5 +1,6 @@
 package com.iesbelen.dam.apirest.apiactividad2.controladores;
 
+import com.iesbelen.dam.apirest.apiactividad2.modelo.dto.EmpleadoDTO;
 import com.iesbelen.dam.apirest.apiactividad2.modelo.entidades.Empleado;
 import com.iesbelen.dam.apirest.apiactividad2.servicios.ServicioEmpleados;
 
@@ -43,5 +44,11 @@ public class ControladorEmpleados {
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizarEmpleado(@Validated @RequestBody Empleado empleado, @PathVariable(value = "id") int id){
         return servicioEmpleados.actualizarEmpleado(empleado, id);
+    }
+
+    //DTO
+    @GetMapping("dto/{id}")
+    public ResponseEntity<EmpleadoDTO> buscarEmpleadosDTOPorId(@PathVariable(value = "id") int id){
+        return servicioEmpleados.buscarEmpleadosDTOPorId(id);
     }
 }

@@ -2,6 +2,8 @@ package com.iesbelen.dam.apirest.apiactividad3.modelo.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "empleados", schema = "public")
@@ -28,6 +30,9 @@ public class Empleado {
         this.id = id;
     }
 
+    @Basic
+    @NotEmpty(message = "El nombre no puede estar vacío.")
+    @Size(min = 2, max = 10, message = "El nombre debe tener una longitud entre 2-10")
     public String getNombre() {
         return nombre;
     }
@@ -36,6 +41,9 @@ public class Empleado {
         this.nombre = nombre;
     }
 
+    @Basic
+    @NotEmpty(message = "El puesto no puede estar vacío.")
+    @Size(min = 2, max = 15, message = "El puesto debe tener una longitud entre 2-15")
     public String getPuesto() {
         return puesto;
     }
@@ -44,8 +52,6 @@ public class Empleado {
         this.puesto = puesto;
     }
 
-//    @ManyToOne
-//    @JoinColumn(name = "depno", referencedColumnName = "depno")
     @JsonIgnoreProperties("empleados")
     public Departamento getDepno() {
         return depno;

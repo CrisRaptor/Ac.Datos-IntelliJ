@@ -1,17 +1,7 @@
 package com.iesbelen.dam.apirest;
 
 import com.iesbelen.dam.apirest.vista.GestorEmpleados;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Scanner;
-
-import static javax.swing.UIManager.put;
 
 public class Main {
 
@@ -36,7 +26,6 @@ public class Main {
             case 4 ->
                     gestor.updateRequest();
         }
-
     }
 
     private static int mostrarMenu(Scanner entrada) {
@@ -57,5 +46,4 @@ public class Main {
 
         return opcion;
     }
-
 }

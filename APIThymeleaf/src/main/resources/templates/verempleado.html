@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Empleado</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+    <h1>Detalles del Empleado</h1>
+    <table>
+        <tr>
+            <th>Número de Empleado</th>
+            <td th:text="${empleado.id}"></td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td th:text="${empleado.nombre}"></td>
+        </tr>
+        <tr>
+            <th>Puesto</th>
+            <td th:text="${empleado.puesto}"></td>
+        </tr>
+        <tr>
+            <th>Número de Departamento</th>
+            <td th:text="${empleado.depno}"></td>
+        </tr>
+    </table>
+    <div class="button-container">
+        <a href="/api-rest/verempleados" class="button">Volver</a>
+    </div>
+</div>
+</div>
+</body>
+</html>

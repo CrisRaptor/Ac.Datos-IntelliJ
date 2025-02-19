@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Partidos</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="container">
+  <h1>Lista de Partidos</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Número de Partido</th>
+      <th>Equipo Local</th>
+      <th>Equipo Visitante</th>
+      <th>Fecha</th>
+      <th>Hora</th>
+      <th>Marcador</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="partido : ${partidos}">
+      <td th:text="${partido.id}"></td>
+      <td th:text="${partido.equipoLocal.nombre}"></td>
+      <td th:text="${partido.equipoVisitante.nombre}"></td>
+      <td th:text="${partido.fecha}"></td>
+      <td th:text="${partido.hora}"></td>
+      <td th:text="|Local ${partido.golesLocal} - ${partido.getGolesVisitante()} Visitante|"></td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="button-container">
+    <a href="/" class="button">Volver a la página de inicio</a>
+  </div>
+</div>
+</body>
+</html>

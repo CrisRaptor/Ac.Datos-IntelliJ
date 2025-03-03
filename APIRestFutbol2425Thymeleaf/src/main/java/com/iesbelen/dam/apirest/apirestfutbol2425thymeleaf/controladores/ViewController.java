@@ -23,7 +23,7 @@ public class ViewController {
     @Autowired
     IEquipoDAO equipoDAO;
     @Autowired
-    IPartidoDAO partidoDAO;
+    IPartidoDAO partidoDAO; 
     @Autowired
     IJugadorDAO jugadorDAO;
 

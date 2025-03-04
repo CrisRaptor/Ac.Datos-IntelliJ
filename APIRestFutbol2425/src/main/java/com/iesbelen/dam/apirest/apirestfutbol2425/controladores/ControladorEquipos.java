@@ -22,7 +22,7 @@ public class ControladorEquipos {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Equipo> buscarEmpleadoPorId(@PathVariable(value = "id") int id){
+    public ResponseEntity<Equipo> buscarEquipoPorId(@PathVariable(value = "id") int id){
         return servicioEquipos.buscarEquipoById(id);
     }
 
